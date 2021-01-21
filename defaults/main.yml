@@ -1,0 +1,10 @@
+---
+rabbitmq_setup: full
+rabbitmq_type: distr
+
+rabbitmq_packagecloud:
+  - {name: rabbitmq_server, repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ {{ ansible_distribution_release }} main", key: "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey"}
+  - {name: rabbitmq_erlang, repo: "deb http://binaries.erlang-solutions.com/debian {{ ansible_distribution_release }} contrib", key: "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"}
+
+rabbitmq_envs: {}
+rabbitmq_packagecloud_version: ''

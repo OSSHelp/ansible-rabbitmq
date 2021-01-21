@@ -1,0 +1,11 @@
+---
+- name: install distr version
+  include_tasks: install-distr.yml
+  when: rabbitmq_type == "distr" and rabbitmq_setup == "full"
+
+- name: install latest stable version from packagecloud
+  include_tasks: install-packagecloud.yml
+  when: rabbitmq_type == "packagecloud" and rabbitmq_setup == "full"
+
+- name: configure RabbitMQ
+  include_tasks: configure.yml

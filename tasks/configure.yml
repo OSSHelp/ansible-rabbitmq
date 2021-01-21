@@ -1,0 +1,39 @@
+---
+- name: create systemd override directory
+  file:
+    path: /etc/systemd/system/rabbitmq-server.service.d
+    state: directory
+    mode: '0755'
+  when: rabbitmq_setup == "full"
+
+- name: create systemd unit override
+  template:
+    src: service-override.j2
+    dest: /etc/systemd/system/rabbitmq-server.service.d/override.conf
+  when: rabbitmq_setup == "full"
+  notify:
+    - reload rabbitmq unit
+    - restart rabbitmq service
+
+- name: enable plugins
+  rabbitmq_plugin:
+    names: "{{ rabbitmq_plugins }}"
+    state: enabled
+  when: rabbitmq_plugins is defined
+  notify:
+    - restart rabbitmq service
+
+- name: shutdown rabbitmq
+  shell: rabbitmqctl shutdown  # noqa 305
+  when: rabbitmq_type == 'distr' and ansible_distribution_release == 'bionic'
+  changed_when: false
+
+- name: create env config
+  template:
+    src: rabbitmq-env.conf.j2
+    dest: /etc/rabbitmq/rabbitmq-env.conf
+  notify:
+    - restart rabbitmq service
+
+- name: force restart rabbitmq
+  meta: flush_handlers

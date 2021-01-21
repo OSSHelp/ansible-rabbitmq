@@ -1,0 +1,6 @@
+PID_FILE=/var/run/rabbitmq/rabbitmq-server.pid
+MNESIA_DIR=/var/lib/rabbitmq/mnesia/rabbitmq
+
+{% for key, value in rabbitmq_envs.items()|sort %}
+{{ key }}={{ value }}
+{% endfor %}

@@ -1,0 +1,13 @@
+---
+- name: install rabbitmq
+  apt:
+    name: rabbitmq-server
+    update_cache: true
+    cache_valid_time: 86400
+
+- name: install socat
+  apt:
+    name: socat
+    update_cache: true
+    cache_valid_time: 86400
+  when: ansible_distribution_release == 'bionic'

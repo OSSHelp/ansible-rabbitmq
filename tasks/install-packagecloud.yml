@@ -1,0 +1,42 @@
+---
+- name: install required packages
+  apt:
+    name:
+      - curl
+      - gnupg
+      - apt-transport-https
+    update_cache: true
+    cache_valid_time: 86400
+
+- name: add pgp keys
+  apt_key:
+    url: "{{ item.key }}"
+    state: present
+  loop: "{{ rabbitmq_packagecloud }}"
+
+- name: add repo
+  apt_repository:
+    repo: "{{ item.repo }}"
+    state: present
+    filename: "{{ item.name }}"
+  loop: "{{ rabbitmq_packagecloud }}"
+  when: ansible_distribution_release != "focal"
+
+- name: add bionic repo in focal
+  apt_repository:
+    repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main"
+    state: present
+    filename: "rabbitmq_server"
+  when: ansible_distribution_release == "focal"
+
+- name: pin erlang version
+  copy:
+    src: erlang
+    dest: /etc/apt/preferences.d/erlang
+  when: rabbitmq_packagecloud_version == '3.7.*'
+
+- name: install rabbitmq
+  apt:
+    name: "rabbitmq-server{{ '=' ~ rabbitmq_packagecloud_version if rabbitmq_packagecloud_version|length > 0 else '' }}"
+    update_cache: true
+    cache_valid_time: 86400
