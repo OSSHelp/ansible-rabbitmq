@@ -7,4 +7,4 @@ rabbitmq_packagecloud:
   - {name: rabbitmq_erlang, repo: "deb http://binaries.erlang-solutions.com/debian {{ ansible_distribution_release }} contrib", key: "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"}
 
 rabbitmq_envs: {}
-rabbitmq_packagecloud_version: ''
+rabbitmq_packagecloud_version: ""

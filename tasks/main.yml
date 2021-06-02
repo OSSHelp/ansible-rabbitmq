@@ -1,4 +1,9 @@
 ---
+- name: gather required facts
+  setup:
+    gather_subset: [min]
+  when: ansible_distribution_release is not defined
+
 - name: install distr version
   include_tasks: install-distr.yml
   when: rabbitmq_type == "distr" and rabbitmq_setup == "full"

@@ -20,20 +20,12 @@
     state: present
     filename: "{{ item.name }}"
   loop: "{{ rabbitmq_packagecloud }}"
-  when: ansible_distribution_release != "focal"
-
-- name: add bionic repo in focal
-  apt_repository:
-    repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main"
-    state: present
-    filename: "rabbitmq_server"
-  when: ansible_distribution_release == "focal"
 
 - name: pin erlang version
-  copy:
-    src: erlang
+  template:
+    src: erlang.j2
     dest: /etc/apt/preferences.d/erlang
-  when: rabbitmq_packagecloud_version == '3.7.*'
+  when: rabbitmq_packagecloud_version | length > 0
 
 - name: install rabbitmq
   apt:

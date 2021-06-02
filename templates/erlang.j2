@@ -1,0 +1,4 @@
+Package: erlang*
+Pin: version {% if rabbitmq_packagecloud_version is version('3.8.4', '>=') and rabbitmq_packagecloud_version is version('3.8.16', '<') %}1:23.*{% elif rabbitmq_packagecloud_version is version('3.8.4', '>=') and rabbitmq_packagecloud_version is version('3.8.16', '<') %}1:22.*{% elif rabbitmq_packagecloud_version is version('3.7.15', '>=') and rabbitmq_packagecloud_version is version('3.8.4', '<') %}1:22.*{% elif rabbitmq_packagecloud_version is version('3.7.7', '>=') and rabbitmq_packagecloud_version is version('3.7.15', '<') %}1:21.*{% elif rabbitmq_packagecloud_version is version('3.7.7', '<') %}1:20.*{% else %}1:24.*{% endif %}
+
+Pin-Priority: 1000

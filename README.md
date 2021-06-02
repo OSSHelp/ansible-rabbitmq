@@ -23,6 +23,7 @@ Don't set too old versions in `rabbitmq_packagecloud_version` variable, they won
       rabbitmq_packagecloud_version: 3.7.*
       rabbitmq_plugins: "rabbitmq_management"
       rabbitmq_envs:
+        MNESIA_DIR: /var/lib/rabbitmq/mnesia/rabbitmq
         NODENAME: rabbitmq1
         NODE_IP_ADDRESS: 0.0.0.0
         NODE_PORT: 5672
@@ -38,6 +39,12 @@ Don't set too old versions in `rabbitmq_packagecloud_version` variable, they won
 | `rabbitmq_envs`| Environment variables for RabbitMQ. Dictionary: `NAME: VALUE` |
 | `rabbitmq_packagecloud_version`| RabbitMQ version for packagecloud installation |
 
+## FAQ
+
+### I have a non-standard path for MNESIA_DIR
+
+You can override default value using `rabbitmq_envs` variable.
+
 ## Useful links
 
 - [Official documentation](https://www.rabbitmq.com/documentation.html)
@@ -47,7 +54,6 @@ Don't set too old versions in `rabbitmq_packagecloud_version` variable, they won
 
 - cluster support
 - auth settings
-- add focal support for packagecloud
 
 ## License
 

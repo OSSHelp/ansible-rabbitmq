@@ -1,3 +1,0 @@
-Package: erlang*
-Pin: version 1:22.*
-Pin-Priority: 1000
